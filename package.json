@@ -1,0 +1,50 @@
+{
+  "name": "@summit53/mcp-server",
+  "version": "1.0.0",
+  "description": "Summit53 CRM — 48 revenue intelligence tools for AI assistants via MCP. Search deals, forecast revenue, analyze pipeline risk, manage outreach, and track value delivery.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "crm",
+    "sales",
+    "revenue-intelligence",
+    "pipeline",
+    "forecast",
+    "meddpic",
+    "outreach",
+    "ai-tools",
+    "claude",
+    "cursor",
+    "windsurf"
+  ],
+  "author": {
+    "name": "Summit53",
+    "email": "support@summit53.io",
+    "url": "https://summit53.io"
+  },
+  "license": "SEE LICENSE IN LICENSE",
+  "homepage": "https://summit53.io/integrations/mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/summit53/mcp-server"
+  },
+  "bugs": {
+    "url": "https://github.com/summit53/mcp-server/issues"
+  },
+  "bin": {
+    "summit53-mcp": "./bin/cli.mjs"
+  },
+  "type": "module",
+  "files": [
+    "bin/",
+    "README.md",
+    "server.json",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "mcp-remote": "^0.1.0"
+  }
+}
