@@ -29,14 +29,14 @@
   "homepage": "https://www.summit53.com/founding-50?utm_source=npm&utm_medium=package&utm_campaign=mcp_server",
   "repository": {
     "type": "git",
-    "url": "https://github.com/summit53/mcp-server"
+    "url": "git+https://github.com/Summit53/mcp-server.git"
   },
   "bugs": {
     "url": "https://github.com/summit53/mcp-server/issues"
   },
   "bin": {
-    "summit53-mcp-server": "./bin/cli.mjs",
-    "summit53-mcp": "./bin/cli.mjs"
+    "summit53-mcp-server": "bin/cli.mjs",
+    "summit53-mcp": "bin/cli.mjs"
   },
   "type": "module",
   "files": [
