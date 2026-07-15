@@ -1,188 +1,111 @@
 # Summit53 MCP Server
 
-**48 revenue intelligence tools for AI assistants.**
+**Bring Summit53's Revenue Engine into the AI workflows your team already uses.**
 
-Summit53 MCP server connects your AI assistant to your CRM — search deals, forecast revenue, analyze pipeline risk, run qualification frameworks, manage outreach sequences, and track value delivery using natural language.
+This package connects MCP-compatible assistants to Summit53's hosted Revenue Engine. Assistants can help diagnose pipeline and forecast gaps, decide the next best action, execute permitted workflows, and preserve value evidence around the Figure-Eight revenue loop — from acquisition through expansion and back into acquisition.
 
 [![npm version](https://img.shields.io/npm/v/@summit53/mcp-server)](https://www.npmjs.com/package/@summit53/mcp-server)
 [![MCP Compatible](https://img.shields.io/badge/MCP-compatible-brightgreen)](https://modelcontextprotocol.io)
 [![License](https://img.shields.io/badge/license-Proprietary-blue)](https://summit53.io/terms)
 
-## Quick Start
+## Quick start
 
-All connections use **OAuth 2.0 authentication** — no API keys to manage. You sign in with your Summit53 account and scoped tokens are issued automatically.
-
-### Claude.ai (Web)
-
-1. Go to **Settings > Connectors**
-2. Click **Add custom connector**
-3. Enter Name: `Summit53` and URL: `https://api.summit53.io/mcp`
-4. Click Save, then **Configure**
-5. Complete OAuth sign-in with your Summit53 credentials
-
-### Claude Desktop / Claude Code
-
-Uses `mcp-remote` to bridge stdio to the hosted OAuth server:
+Add the package to a stdio-based MCP client such as Claude Desktop, Claude Code, Cursor, Windsurf, or Codex:
 
 ```json
 {
   "mcpServers": {
     "summit53": {
       "command": "npx",
-      "args": [
-        "mcp-remote",
-        "https://api.summit53.io/mcp/"
-      ]
+      "args": ["-y", "@summit53/mcp-server"]
     }
   }
 }
 ```
 
-On first run, a browser window opens for OAuth sign-in. Tokens are cached locally and refresh automatically.
+On first use, your browser opens the Summit53 OAuth flow. Sign in, review the requested access, and authorize the client. Tokens are cached by the local MCP bridge and refreshed automatically.
 
-**Config file locations:**
-- macOS: `~/Library/Application Support/Claude/claude_desktop_config.json`
-- Windows: `%APPDATA%\Claude\claude_desktop_config.json`
-- Linux: `~/.config/Claude/claude_desktop_config.json`
+For a web client that supports custom remote MCP connections, add:
 
-### ChatGPT
+- **Name:** `Summit53`
+- **URL:** `https://api.summit53.io/mcp`
 
-1. Go to **Settings > Apps**
-2. Click **Add app** and search for Summit53
-3. Enter server URL: `https://api.summit53.io/mcp`
-4. Authorize via OAuth with your Summit53 account
+Client availability and labels vary by plan and workspace. Use the custom server URL instead of relying on a public app-directory listing.
 
-### Cursor / Windsurf
+See the [MCP setup guide](https://www.summit53.com/docs/mcp-setup-guide?utm_source=github&utm_medium=referral&utm_campaign=mcp_server) for client-specific instructions.
 
-Use the same `mcp-remote` proxy command in your client's MCP configuration:
+## What the Revenue Engine enables
 
-```json
-{
-  "mcpServers": {
-    "summit53": {
-      "command": "npx",
-      "args": ["mcp-remote", "https://api.summit53.io/mcp/"]
-    }
-  }
-}
-```
+Ask in natural language to:
 
-## What Can You Do?
+- diagnose pipeline risk, deal drag, forecast confidence, gaps, and capacity;
+- prepare opportunity strategy, account reviews, weekly action plans, and coaching;
+- research accounts and inspect notes, activity, outreach, value impact, and methodology knowledge;
+- write permitted notes, outreach updates, value evidence, and coaching outcomes;
+- track long-running work through a durable job lifecycle.
 
-Ask your AI assistant questions like:
+The current release gate freezes **75 externally published functions across 15 categories**. That count is a compatibility fact, not the product proposition. Tool visibility depends on the client's granted scopes and the user's Summit53 organization permissions; call `list_available_tools` to discover the surface available in the current session.
 
-| Category | Example Prompts |
-|----------|----------------|
-| **Search** | "Show me all deals over $50k" · "Find accounts in the technology industry" |
-| **Pipeline Risk** | "What deals are at risk?" · "Show me the risk heatmap" |
-| **Forecasting** | "What's our forecast confidence this quarter?" · "What's our current ARR?" |
-| **Qualification** | "Run MEDDPIC analysis on deal 15" · "What's the BANT score for opportunity 7?" |
-| **Activity** | "Which accounts haven't been touched in 30 days?" · "What's my weekly action plan?" |
-| **Outreach** | "Show me outreach leads for Globex" · "Enroll leads 11 and 12 in sequence 7" |
-| **Value Tracking** | "How is Acme Corp tracking on value delivery?" · "Show the value contract for deal 15" |
-| **Team** | "How is my team doing on their weekly plans?" · "Show team activities for last week" |
+| Category | Published functions |
+| --- | ---: |
+| Search | 3 |
+| Opportunity Strategy | 5 |
+| Account Intelligence | 3 |
+| Pipeline & Risk | 4 |
+| RevOps | 2 |
+| Forecasting | 9 |
+| Activity | 3 |
+| Research | 1 |
+| Notes & Activities | 5 |
+| Outreach | 17 |
+| Value Impact | 11 |
+| Coaching | 3 |
+| Knowledge Base | 5 |
+| Job Lifecycle | 3 |
+| Discovery | 1 |
 
-## All 48 Tools
+The exact machine-readable surface is maintained in [`tool-catalog.json`](./tool-catalog.json). The registry-compatible connection manifest is [`server.json`](./server.json). The [tool reference](https://www.summit53.com/docs/mcp-tool-reference?utm_source=github&utm_medium=referral&utm_campaign=mcp_server) explains inputs, outputs, access requirements, and async behavior.
 
-### Search (3 tools)
-- `get_opportunity` — Full deal details by ID
-- `search_opportunities` — Filter deals by name, stage, account, value
-- `search_accounts` — Filter accounts by name, industry, owner, revenue
+## Authentication and permissions
 
-### Account Intelligence (3 tools)
-- `account_intelligence_summary` — Health scores, risk accounts, expansion candidates
-- `account_execution_health` — Execution health score for a specific account
-- `opportunity_framework_summary` — MEDDPIC/BANT/SPICED qualification scores
+Interactive connections use OAuth 2.1-style authorization with PKCE. Access tokens last one hour; rotating refresh tokens last seven days. Access can be revoked from `/admin/integrations/mcp` in Summit53.
 
-### Pipeline & Risk (4 tools)
-- `pipeline_risk_summary` — Risk analysis with confidence metrics
-- `risk_heatmap` — Deal-level risk heatmap with scores and factors
-- `deal_drag_summary` — Stalled deals, waste scores, risk distribution
-- `deal_drag_dashboard` — Paginated deal drag with filters
+The published scope set is:
 
-### Forecasting (4 tools)
-- `forecast_confidence` — Confidence scores, rep performance, velocity, quota coverage
-- `arr_growth_analytics` — ARR, NRR, growth stage classification, trends
-- `arr_growth_narrative` — AI-generated ARR narrative with recommendations
-- `unified_forecast_summary` — Executive forecast: pipeline coverage, revenue at risk
+- read: `crm:read`, `pipeline:read`, `revenue:read`, `actions:read`, `jobs:read`;
+- write and operations: `crm:write`, `outreach:write`, `outreach:send`, `coaching:write`, `value:write`, `automation:manage`, `jobs:manage`.
 
-### Activity (3 tools)
-- `activity_gaps` — Accounts not touched in N days
-- `weekly_action_plan` — Prioritized weekly tasks with risk summaries
-- `team_action_plan` — Team-wide completion rates and flagged deals
+Business write tools always require their explicit write scopes. Job lifecycle tools always enforce `jobs:read` or `jobs:manage`. Read-scope enforcement for the remaining catalogue is being rolled out behind a production gate. Summit53's organization, ownership, and role permissions remain authoritative in every case.
 
-### Research (1 tool)
-- `external_account_research` — Queue async web/news research for an account
+Some approved service integrations can use scoped static API keys, but API keys are not part of the normal interactive setup. A scope authorizes an operation; it does not itself prove human approval. Broader high-risk write workflows remain gated until portable approval controls are available.
 
-### Notes & Activities (5 tools)
-- `get_opportunity_notes_summary` — AI-generated notes summary
-- `rebuild_opportunity_notes_summary` — Regenerate notes summary
-- `get_opportunity_activities` — All activities (calls, emails, meetings, notes)
-- `get_opportunity_notes` — All notes on a deal
-- `create_opportunity_note` — Add a note (triggers async summary update)
+## Async jobs
 
-### Outreach (13 tools)
-- `search_outreach_leads` — Filter leads by query, status, owner, list
-- `list_outreach_sequences` — All sequences with metadata
-- `get_outreach_sequence` — Sequence details including steps
-- `enroll_outreach_leads_in_sequence` — Enroll leads into sequences
-- `process_outreach_due_steps` — Trigger due-step processing
-- `resolve_outreach_manual_step` — Complete/skip manual steps
-- `convert_outreach_lead` — Convert lead to CRM account/contact/opportunity
-- `list_outreach_starter_templates` — Predefined sequence templates
-- `get_outreach_lead` — Full lead details
-- `update_outreach_lead` — Update lead fields
-- `list_outreach_lead_lists` — Lead lists with counts
-- `bulk_upsert_outreach_leads` — Create/update up to 200 leads with dedup
-- `outreach_funnel_summary` — Funnel breakdown by status, stage, fit, engagement
+Long-running tools return a durable job response rather than asking the client to hold an HTTP request open. Use:
 
-### Value Impact (11 tools)
-- `get_value_impact_card` — Fulfillment score, expansion readiness, evidence confidence
-- `get_value_contract` — Promised outcomes for an opportunity
-- `list_impact_entries` — Post-sale impact evidence for a contract
-- `list_account_contracts` — All contracts with dates, ARR, status
-- `create_impact_entry` — Add manual impact evidence
-- `update_impact_entry` — Update impact entry fields
-- `delete_impact_entry` — Remove an impact entry
-- `update_account_contract` — Update contract dates, ARR, term
-- `set_primary_contract` — Set primary contract for an account
-- `generate_value_contract` — AI-generate value contract from deal notes
-- `run_value_impact_pipeline` — Full pipeline: contracts, generation, evidence extraction
+- `get_job` to inspect status and results;
+- `list_jobs` to find recent work;
+- `cancel_job` to request cancellation when the job is still cancellable.
 
-### Discovery (1 tool)
-- `list_available_tools` — Discover all tools, optionally filtered by category
-
-## Authentication
-
-Summit53 uses **OAuth 2.0** for all MCP connections. No API keys to generate or rotate.
-
-- Sign in with your Summit53 account credentials during setup
-- Scoped tokens are issued automatically (`crm:read`, `pipeline:read`, `revenue:read`, `actions:read`)
-- Tokens expire after 1 year and can be revoked from your admin panel at `/admin/integrations/mcp`
-- OAuth discovery: `https://api.summit53.io/.well-known/oauth-authorization-server`
-
-For stdio-based clients (Claude Desktop, Cursor, Windsurf), the `mcp-remote` package handles the OAuth flow — a browser window opens on first run, and tokens are cached locally.
+Job records are retained for 30 days. Every published function uses the same versioned response envelope so clients can handle success, partial results, queued work, and errors consistently.
 
 ## Architecture
 
-- **Transport**: Streamable HTTP (Cloud Run compatible, no WebSocket required)
-- **Rate Limiting**: 100 calls/min global, 30/min per tool (Redis-backed sliding window)
-- **Caching**: Redis-backed with per-tool TTLs (5-15 minutes)
-- **Metrics**: Built-in usage tracking per tool, per org
-- **Hosting**: Google Cloud Run (stateless, auto-scaling)
+- **Transport:** Streamable HTTP through the hosted Summit53 service
+- **Endpoint:** `https://api.summit53.io/mcp`
+- **Tenant boundaries:** Summit53 authentication and application permissions
+- **Rate limiting and caching:** enforced by the hosted service, with tool-specific policies
+- **Metrics:** usage and errors tracked per organization and tool
 
-## Getting Started
+## Join the Founding 50
 
-1. Sign up at [summit53.io](https://summit53.io)
-2. Add Summit53 to your MCP client (see Quick Start above)
-3. Authenticate via OAuth when prompted
-4. Start asking your AI assistant about your pipeline
+Summit53 is working with a small group of B2B SaaS revenue teams to shape the Revenue Engine in production. [Apply to the Founding 50](https://www.summit53.com/founding-50?utm_source=github&utm_medium=referral&utm_campaign=mcp_server).
 
 ## Support
 
-- Documentation: [summit53.com/docs](https://www.summit53.com/docs)
+- Documentation: [summit53.com/docs](https://www.summit53.com/docs?utm_source=github&utm_medium=referral&utm_campaign=mcp_server)
 - Email: support@summit53.io
-- Issues: [github.com/summit53/mcp-server/issues](https://github.com/summit53/mcp-server/issues)
+- Issues: [github.com/Summit53/mcp-server/issues](https://github.com/Summit53/mcp-server/issues)
 
 ## License
 

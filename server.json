@@ -1,77 +1,35 @@
 {
-  "name": "io.summit53.mcp-server",
-  "display_name": "Summit53 CRM",
-  "description": "Revenue intelligence MCP server with 48 tools for AI-powered CRM workflows. Search deals, forecast revenue, analyze pipeline risk, run MEDDPIC scoring, manage outreach sequences, and track value delivery — all from your AI assistant.",
-  "version": "1.0.0",
-  "author": {
-    "name": "Summit53",
-    "url": "https://summit53.io",
-    "email": "support@summit53.io"
-  },
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.summit53/mcp-server",
+  "title": "Summit53 Revenue Engine",
+  "description": "Revenue Engine for scoped diagnosis, action planning, execution, and Figure-Eight value evidence.",
   "repository": {
-    "type": "git",
-    "url": "https://github.com/summit53/mcp-server"
+    "url": "https://github.com/Summit53/mcp-server",
+    "source": "github"
   },
-  "homepage": "https://summit53.io/integrations/mcp",
-  "documentation": "https://www.summit53.com/docs",
-  "transport": {
-    "type": "streamable-http",
-    "url": "https://api.summit53.io/mcp"
-  },
-  "authentication": {
-    "type": "oauth2",
-    "discovery_url": "https://api.summit53.io/.well-known/oauth-authorization-server",
-    "authorization_url": "https://api.summit53.io/oauth/authorize/",
-    "token_url": "https://api.summit53.io/oauth/token/",
-    "scopes": [
-      "crm:read",
-      "pipeline:read",
-      "revenue:read",
-      "actions:read"
-    ],
-    "note": "OAuth 2.0 only — no API keys. Tokens expire after 1 year."
-  },
-  "categories": [
-    "CRM",
-    "Sales",
-    "Revenue Intelligence",
-    "Pipeline Management",
-    "Forecasting",
-    "Outreach"
+  "version": "1.0.2",
+  "websiteUrl": "https://www.summit53.com/founding-50?utm_source=mcp_registry&utm_medium=referral&utm_campaign=mcp_server",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://api.summit53.io/mcp"
+    }
   ],
-  "tags": [
-    "crm",
-    "sales",
-    "revenue",
-    "pipeline",
-    "forecast",
-    "meddpic",
-    "outreach",
-    "deal-management",
-    "account-intelligence",
-    "value-impact"
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@summit53/mcp-server",
+      "version": "1.0.2",
+      "transport": {
+        "type": "stdio"
+      }
+    }
   ],
-  "tools_count": 48,
-  "tool_categories": {
-    "Search": ["get_opportunity", "search_opportunities", "search_accounts"],
-    "Account Intelligence": ["account_intelligence_summary", "account_execution_health", "opportunity_framework_summary"],
-    "Pipeline & Risk": ["pipeline_risk_summary", "risk_heatmap", "deal_drag_summary", "deal_drag_dashboard"],
-    "Forecasting": ["forecast_confidence", "arr_growth_analytics", "arr_growth_narrative", "unified_forecast_summary"],
-    "Activity": ["activity_gaps", "weekly_action_plan", "team_action_plan"],
-    "Research": ["external_account_research"],
-    "Notes & Activities": ["get_opportunity_notes_summary", "rebuild_opportunity_notes_summary", "get_opportunity_activities", "get_opportunity_notes", "create_opportunity_note"],
-    "Outreach": ["search_outreach_leads", "list_outreach_sequences", "get_outreach_sequence", "enroll_outreach_leads_in_sequence", "process_outreach_due_steps", "resolve_outreach_manual_step", "convert_outreach_lead", "list_outreach_starter_templates", "get_outreach_lead", "update_outreach_lead", "list_outreach_lead_lists", "bulk_upsert_outreach_leads", "outreach_funnel_summary"],
-    "Value Impact": ["get_value_impact_card", "get_value_contract", "list_impact_entries", "list_account_contracts", "create_impact_entry", "update_impact_entry", "delete_impact_entry", "update_account_contract", "set_primary_contract", "generate_value_contract", "run_value_impact_pipeline"]
-  },
-  "supported_clients": [
-    "Claude Desktop",
-    "Claude.ai",
-    "Cursor",
-    "Windsurf",
-    "Claude Code",
-    "Codex",
-    "Any MCP-compatible client"
-  ],
-  "license": "Proprietary",
-  "pricing": "Free tier available. See https://summit53.io/pricing"
+  "_meta": {
+    "io.modelcontextprotocol.registry/publisher-provided": {
+      "documentation_url": "https://www.summit53.com/docs/mcp-setup-guide?utm_source=mcp_registry&utm_medium=referral&utm_campaign=mcp_server",
+      "founding_50_url": "https://www.summit53.com/founding-50?utm_source=mcp_registry&utm_medium=referral&utm_campaign=mcp_server",
+      "external_function_count": 75
+    }
+  }
 }
