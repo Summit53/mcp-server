@@ -8,9 +8,35 @@ This package connects MCP-compatible assistants to Summit53's hosted Revenue Eng
 [![MCP Compatible](https://img.shields.io/badge/MCP-compatible-brightgreen)](https://modelcontextprotocol.io)
 [![License](https://img.shields.io/badge/license-Proprietary-blue)](https://summit53.io/terms)
 
+> **Using Claude or Codex?** Install the **Summit53 plugin** from
+> [github.com/Summit53/skills](https://github.com/Summit53/skills) instead. It connects the
+> hosted Summit53 server directly (no local package) and adds guided Summit53 skills for
+> forecast, deal, renewal, coaching, territory and board workflows.
+>
+> ```text
+> # Claude Code
+> /plugin marketplace add Summit53/skills
+> /plugin install summit53@summit53
+>
+> # Codex
+> codex plugin marketplace add Summit53/skills
+> codex plugin add summit53@summit53
+> ```
+>
+> In claude.ai, Claude Desktop or Cowork, add the marketplace `https://github.com/Summit53/skills`
+> under **Customize › Plugins › Add**. This repository is not a plugin marketplace.
+
 ## Quick start
 
-Add the package to a stdio-based MCP client such as Claude Desktop, Claude Code, Cursor, Windsurf, or Codex:
+Most clients, including claude.ai, Claude Desktop, Claude Code, Codex and Cursor, can connect to
+the hosted server directly at `https://api.summit53.io/mcp` and sign in with OAuth:
+
+```bash
+claude mcp add --transport http summit53 https://api.summit53.io/mcp
+codex mcp add summit53 --url https://api.summit53.io/mcp
+```
+
+This package is a local stdio bridge for clients that only support command-based servers:
 
 ```json
 {
