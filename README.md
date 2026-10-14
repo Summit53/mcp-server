@@ -6,7 +6,7 @@ This package connects MCP-compatible assistants to Summit53's hosted Revenue Eng
 
 [![npm version](https://img.shields.io/npm/v/@summit53/mcp-server)](https://www.npmjs.com/package/@summit53/mcp-server)
 [![MCP Compatible](https://img.shields.io/badge/MCP-compatible-brightgreen)](https://modelcontextprotocol.io)
-[![License](https://img.shields.io/badge/license-Proprietary-blue)](https://summit53.io/terms)
+[![License](https://img.shields.io/badge/license-Proprietary-blue)](https://summit53.io/terms-of-service)
 
 > **Using Claude or Codex?** Install the **Summit53 plugin** from
 > [github.com/Summit53/skills](https://github.com/Summit53/skills) instead. It connects the
@@ -135,4 +135,4 @@ Summit53 is working with a small group of B2B SaaS revenue teams to shape the Re
 
 ## License
 
-Proprietary. See [summit53.io/terms](https://summit53.io/terms) for details.
+Proprietary. See [summit53.io/terms-of-service](https://summit53.io/terms-of-service) for details.
